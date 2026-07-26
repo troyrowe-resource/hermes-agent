@@ -30,6 +30,7 @@ import { cn } from '@/lib/utils'
 
 import { $layoutEditMode } from '../../edit-mode'
 import { useWindowControlsOverlap } from '../../geometry'
+import { PaneActiveProvider } from '../../pane-active'
 import { hiddenPaneProps } from '../../pane-visibility'
 import type { DropPosition, GroupNode, RootEdge } from '../model'
 import { adjacentGroup } from '../model'
@@ -544,7 +545,9 @@ export function TreeGroup({
                   {...hiddenPaneProps(!isActive)}
                 >
                   {pane?.render ? (
-                    <ContribBoundary id={pane.id}>{pane.render()}</ContribBoundary>
+                    <PaneActiveProvider active={isActive}>
+                      <ContribBoundary id={pane.id}>{pane.render()}</ContribBoundary>
+                    </PaneActiveProvider>
                   ) : (
                     isActive && (
                       <div className="p-3 font-mono text-[11px] text-(--ui-text-quaternary)">
